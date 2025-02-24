@@ -2,7 +2,7 @@ function setup() {
     cnv = new Canvas(windowWidth, windowHeight);
     
     // Create player sprite (square)
-    player = new Sprite(2, 50, 30, 30, 'd');
+    player = new Sprite(200, 600, 30, 30, 'd');
     player.color = 'blue';
     player.rotationSpeed = 2;
     
@@ -36,13 +36,13 @@ function draw() {
     player.moveTowards(mouseX, mouseY, 2);
     
     if (mouse.presses()) {
-        player.moveTo(300, 400, 5);
+        player.moveTo(600, 600, 5);
     }
 }
 
 function spawnCoin() {
-    let x = random(50, width - 50);
-    let y = random(50, height - 50);
+    let x = random(600, 600);
+    let y = random(600, 600);
     let newCoin = new Sprite(x, y, 20, 'd');
     newCoin.color = 'gold';
     coinGroup.add(newCoin);
