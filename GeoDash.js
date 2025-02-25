@@ -1,46 +1,68 @@
-/*******************************************************/
-// P5.play: t05_createWalls
-// Create walls around the canvas
-// Written by ???
-/*******************************************************/
-// setup()
-/*******************************************************/
 function setup() {
-	console.log("");
-	cnv = new Canvas(windowWidth, windowHeight);
-	RECTANGLE = new Sprite(1000, 450, 50, 50,);
-	RECTANGLE.color = 'Blue';
-    RECTANGLE.rotationSpeed = 0.5;
-    RECTANGLE.moveTowards(mouseX, mouseY, 1);
-    if (mouse.presses()) {
-        console.log("HELLO")
-        RECTANGLE.moveTo(xPos, yPos, 2);
-    }
-
-
-    ball_1 = new Sprite(width/2, height/2, 50, 'd');
-ball_1.color = 'cyan';
-ball_1.vel.x = 2;
-ball_1.bounciness = 1;
-ball_1.friction = 0;
-ball_1.drag = 0;
-
-for (i = 0; i < 20; i++) {
-	alien = new Sprite(width/2, height/2, 50,'d');
-	alien.vel.x = 3;
-	alien.vel.y = 4;
-	alien.bounciness = 1;
-	alien.friction = 0;
-  }
-
+    cnv = new Canvas(windowWidth, windowHeight);
    
+    // Create player sprite (square)
+    player = new Sprite(200, 600, 30, 30, 'd');
+    player.color = 'blue';
+    player.rotationSpeed = 0.1;
+   
+    // Walls surrounding the platforms
+    let wallLH = new Sprite(10, 450, 8, 800, 'k');
+    wallLH.color = 'black';
+   
+    let wallRH = new Sprite(1890, 450, 8, 800, 'k');
+    wallRH.color = 'blue';
+   
+    let wallTop = new Sprite(950, 50, 1890, 10, 'k');
+    wallTop.color = 'purple';
+   
+    let wallBot = new Sprite(950, 850, 1890, 10, 'k');
+    wallBot.color = 'lightgreen';
+   
+    // Group for coins
+    coinGroup = new Group();
+   
+    // Register a callback for collision
+    coinGroup.collides(player, collectCoin);
+   
+    // Spawn initial coin
+    spawnCoin();
 }
-/*******************************************************/
-// draw()
-/*******************************************************/
-function draw() { 
-	background('lightpink');
+
+
+function draw() {
+    background('lightgray');
+   
+    // Move player towards mouse
+    player.moveTowards(mouseX, mouseY, 1);
+   
+    if (mouse.presses()) {
+        player.moveTo(600, 600, 1);
+    }
 }
-/*******************************************************/
-//  END OF APP
-/*******************************************************/
+
+
+function spawnCoin() {
+    let x = random(200, 1800);
+    let y = random(200, 800);
+    let newCoin = new Sprite(x, y, 20, 'd');
+    newCoin.color = 'gold';
+    coinGroup.add(newCoin);
+
+
+    // Set a timeout for the coin to disappear after 5 seconds
+    setTimeout(() => {
+        if (coinGroup.includes(newCoin)) {
+            newCoin.remove();
+            noLoop();
+        }
+    }, 5000);
+}
+
+
+function collectCoin(_player, _collectedCoin) {
+    _collectedCoin.remove();
+    spawnCoin();
+}
+
+
