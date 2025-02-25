@@ -56,11 +56,11 @@ function spawnCoin() {
             newCoin.remove();
             noLoop();
         }
-    }, 5000);
+    }, 3000);
 }
 
 
-function collectCoin(_player, _collectedCoin) {
+function collectCoin(_collectedCoin, _player) {
     _collectedCoin.remove();
     spawnCoin();
 }
