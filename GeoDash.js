@@ -1,12 +1,17 @@
+let score = 0;
+const MOVEMENTSPEED = 1;
+
 function setup() {
     cnv = new Canvas(windowWidth, windowHeight);
    
     // Create player sprite (square)
-    player = new Sprite(200, 600, 30, 30, 'd');
+    player = new Sprite(200, 600, 30, 30);
     player.color = 'blue';
     player.rotationSpeed = 0.1;
+    player.friction = 0.1;
    
-    // Walls surrounding the platforms
+   
+
     let wallLH = new Sprite(10, 450, 8, 800, 'k');
     wallLH.color = 'black';
    
@@ -29,26 +34,29 @@ function setup() {
     spawnCoin();
 }
 
-
 function draw() {
     background('lightgray');
    
-    // Move player towards mouse
-    player.moveTowards(mouseX, mouseY, 1);
-   
-    if (mouse.presses()) {
-        player.moveTo(600, 600, 1);
-    }
+    movePlayer();
+    displayScore();
 }
 
+function displayScore() {
+    fill(0, 0, 0);
+    textSize(20);
+    text("Score: " + score, 10, 20);
+}
+
+function movePlayer() {
+    player.moveTowards(mouseX, mouseY, MOVEMENTSPEED * 0.1);
+}
 
 function spawnCoin() {
     let x = random(200, 1800);
     let y = random(200, 800);
-    let newCoin = new Sprite(x, y, 20, 'd');
+    let newCoin = new Sprite(x, y, 20);
     newCoin.color = 'gold';
     coinGroup.add(newCoin);
-
 
     // Set a timeout for the coin to disappear after 5 seconds
     setTimeout(() => {
@@ -59,10 +67,8 @@ function spawnCoin() {
     }, 3000);
 }
 
-
 function collectCoin(_collectedCoin, _player) {
     _collectedCoin.remove();
+    score += 1;
     spawnCoin();
 }
-
-
