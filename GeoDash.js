@@ -52,8 +52,8 @@ function movePlayer() {
 }
 
 function spawnCoin() {
-    let x = random(200, 1800);
-    let y = random(200, 800);
+    let x = random(200, 600);
+    let y = random(200, 500);
     let newCoin = new Sprite(x, y, 20);
     newCoin.color = 'gold';
     coinGroup.add(newCoin);
