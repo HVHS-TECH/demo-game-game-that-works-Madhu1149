@@ -10,9 +10,9 @@ window.draw = draw;
 //***********************************************
 import {
   fb_initialise,
-  fb_changeAuth,
-  fb_readRec,
-  fb_writeRec,
+  fb_authenticate,
+  fb_Read,
+  fb_write,
   fb_readAll,
   fb_readSortedLimit
 } from './fb_io.mjs';
@@ -25,7 +25,6 @@ let coinGroup;
 
 function setup() {
     cnv = new Canvas(windowWidth, windowHeight);
-
     // Create player sprite (square)
     player = new Sprite(200, 600, 30, 30);
     player.color = 'blue';
